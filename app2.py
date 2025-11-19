@@ -193,7 +193,7 @@ elif page == "notice":
     - 쓰레기 분리수거 철저히  
     - 위험 물품 반입 금지  
     - 이동 시 안전 주의  
-    - 타 학교 학생도 입장 가능  
+    - 타 학교 학생도 입장 가능!!  
     """)
     st.markdown('</div>', unsafe_allow_html=True)
 
