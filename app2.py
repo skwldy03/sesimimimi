@@ -53,6 +53,12 @@ st.markdown("---")
 # 3. 데이터 로드 및 전처리
 # ----------------------------------------------------------
 st.header("1. 데이터 로드 및 전처리")
+data = pd.read_csv("공지천3_수질측정망.csv", encoding='utf-8')
+st.dataframe(data)
+
+data2 = data['용존산소(㎎/L)']
+st.line_chart(data2)
+
 
 # 데이터 파일을 업로드하는 버튼을 만드세요.
 uploaded_file = st.file_uploader("분석할 CSV 파일을 업로드하세요", type=['csv'])
