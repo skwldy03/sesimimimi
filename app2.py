@@ -16,9 +16,16 @@ st.set_page_config(
 # ----------------------------------------------------------
 # 필요하면 더 추가하세요.
 st.title("공지천 수질 측정 데이터 분석 보고서")
-st.subheader("주제: [여기는 주제랍니다~~~~]")
+st.subheader("우리가 쓰는 물은 안전할까?")
 st.markdown("---")
 
+left, middle, right = st.columns(3)
+if left.button("용존산소"):
+    left.markdown("You clicked the plain button.")
+if middle.button("총질소"):
+    middle.markdown("You clicked the emoji button.")
+if right.button("총유기탄소"):
+    right.markdown("You clicked the Material button.")
 # ----------------------------------------------------------
 # 2. 데이터셋 소개 (텍스트, 사진, 링크, 영상)
 # 스트림릿 문서를 참고하여,, 추가 기능을 더 넣으셔도 좋습니다.
@@ -28,8 +35,8 @@ col1, col2 = st.columns([1, 1])  ## 화면분할 절반씩
 with col1: #왼쪽 화면
     st.info("사용된 데이터 정보") #제목은 알아서 수정
     # 아래 내용을 본인이 선택한 데이터에 맞게 수정하세요.
-    st.write("**데이터 파일명:** example_data.csv")  #예시.
-    st.write("**데이터 출처:** [Kaggle / 공공데이터포털 링크](https://www.kaggle.com/)")
+    st.write("**데이터 파일명:** 공지천3_수질측정망.csv")  #예시.
+    st.write("**데이터 출처:** 국가 통합물관리정보플랫폼(https://www.mulmoa.go.kr/web/gDashBoard)")
    
     #  데이터 관련 이미지(로고, 썸네일 등)가 있다면 경로를 수정하세요.
     # 이미지가 없다면 주석 처리하세요.
@@ -39,9 +46,9 @@ with col1: #왼쪽 화면
         st.write("이미지를 불러올 수 없습니다.")
 
 with col2:
-    st.warning(" 관련 배경 지식 (영상)")
+    st.warning("우리의 실천 방안")
     # 주제와 관련된 유튜브 영상 링크를 넣으세요.
-    st.video("https://www.youtube.com/watch?v=sJbdhA6iH5U") # 예시: 스트림릿 소개 영상
+    st.video("https://www.youtube.com/watch?v=6s7vo55ekFA") # 예시: 스트림릿 소개 영상
 
 st.markdown("---")
 
