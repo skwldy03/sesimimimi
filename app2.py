@@ -38,7 +38,7 @@ with col1: #왼쪽 화면
     #  데이터 관련 이미지(로고, 썸네일 등)가 있다면 경로를 수정하세요.
     # 이미지가 없다면 주석 처리하세요.
     try:
-        st.image("https://via.placeholder.com/400x200?text=Data+Image", caption="데이터 예시 이미지")
+        st.image("공지천3_지점정보.png", caption="지점정보")
     except:
         st.write("이미지를 불러올 수 없습니다.")
 
