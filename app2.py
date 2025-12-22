@@ -15,7 +15,7 @@ st.set_page_config(
 # 1. 최상단: 프로젝트 소개
 # ----------------------------------------------------------
 # 필요하면 더 추가하세요.
-st.title("~~~~~~~의 데이터 분석 프로젝트")
+st.title("공지천 수질 측정 데이터 분석 보고서")
 st.subheader("주제: [여기는 주제랍니다~~~~]")
 st.markdown("---")
 
@@ -29,19 +29,19 @@ with col1: #왼쪽 화면
     st.info("사용된 데이터 정보") #제목은 알아서 수정
     # 아래 내용을 본인이 선택한 데이터에 맞게 수정하세요.
     st.write("**데이터 파일명:** example_data.csv")  #예시.
-    st.write("**데이터 출처:** [Kaggle / 공공데이터포털 링크](https://www.kaggle.com/)&quot;)
+    st.write("**데이터 출처:** [Kaggle / 공공데이터포털 링크](https://www.kaggle.com/)")
    
     #  데이터 관련 이미지(로고, 썸네일 등)가 있다면 경로를 수정하세요.
     # 이미지가 없다면 주석 처리하세요.
     try:
-        st.image("https://via.placeholder.com/400x200?text=Data+Image&quot;, caption="데이터 예시 이미지")
+        st.image("https://via.placeholder.com/400x200?text=Data+Image", caption="데이터 예시 이미지")
     except:
         st.write("이미지를 불러올 수 없습니다.")
 
 with col2:
     st.warning(" 관련 배경 지식 (영상)")
     # 주제와 관련된 유튜브 영상 링크를 넣으세요.
-    st.video("https://www.youtube.com/watch?v=sJbdhA6iH5U&quot;) # 예시: 스트림릿 소개 영상
+    st.video("https://www.youtube.com/watch?v=sJbdhA6iH5U") # 예시: 스트림릿 소개 영상
 
 st.markdown("---")
 
