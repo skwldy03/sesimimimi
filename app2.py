@@ -3,9 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ----------------------------------------------------------
-# [기본 설정] 페이지 설정
-# ----------------------------------------------------------
 st.set_page_config(
     page_title="나만의 데이터 분석 보고서",
     layout="wide"
