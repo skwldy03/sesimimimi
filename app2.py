@@ -1,84 +1,111 @@
 import streamlit as st
-from datetime import datetime
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# 페이지 기본 설정
+# ----------------------------------------------------------
+# [기본 설정] 페이지 설정
+# ----------------------------------------------------------
 st.set_page_config(
-    page_title="세심제 - 강원사대부고 축제",
-    layout="centered",
+    page_title="나만의 데이터 분석 보고서",
+    layout="wide"
 )
 
-# CSS 스타일
-st.markdown("""
-<style>
-html, body, [class*="css"]  {
-    font-family: 'NanumSquare', sans-serif;
-}
+# ----------------------------------------------------------
+# 1. 최상단: 프로젝트 소개
+# ----------------------------------------------------------
+# 필요하면 더 추가하세요.
+st.title("~~~~~~~의 데이터 분석 프로젝트")
+st.subheader("주제: [여기는 주제랍니다~~~~]")
+st.markdown("---")
 
-.main {
-    max-width: 480px;
-    margin: 0 auto;
-}
+# ----------------------------------------------------------
+# 2. 데이터셋 소개 (텍스트, 사진, 링크, 영상)
+# 스트림릿 문서를 참고하여,, 추가 기능을 더 넣으셔도 좋습니다.
+# ----------------------------------------------------------
+col1, col2 = st.columns([1, 1])  ## 화면분할 절반씩
 
-.header-box {
-    text-align: center;
-    padding: 20px 10px;
-    background: linear-gradient(135deg, #8d5fe7, #b77bff);
-    color: white;
-    border-radius: 16px;
-    margin-bottom: 20px;
-}
+with col1: #왼쪽 화면
+    st.info("사용된 데이터 정보") #제목은 알아서 수정
+    # 아래 내용을 본인이 선택한 데이터에 맞게 수정하세요.
+    st.write("**데이터 파일명:** example_data.csv")  #예시.
+    st.write("**데이터 출처:** [Kaggle / 공공데이터포털 링크](https://www.kaggle.com/)&quot;)
+   
+    #  데이터 관련 이미지(로고, 썸네일 등)가 있다면 경로를 수정하세요.
+    # 이미지가 없다면 주석 처리하세요.
+    try:
+        st.image("https://via.placeholder.com/400x200?text=Data+Image&quot;, caption="데이터 예시 이미지")
+    except:
+        st.write("이미지를 불러올 수 없습니다.")
 
-.card {
-    background: #ffffff;
-    padding: 18px 20px;
-    border-radius: 14px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
-    margin-bottom: 18px;
-}
+with col2:
+    st.warning(" 관련 배경 지식 (영상)")
+    # 주제와 관련된 유튜브 영상 링크를 넣으세요.
+    st.video("https://www.youtube.com/watch?v=sJbdhA6iH5U&quot;) # 예시: 스트림릿 소개 영상
 
-.tab-box {
-    display: flex;
-    justify-content: space-between;
-    margin: 5px 0 20px 0;
-}
+st.markdown("---")
 
-.tab-btn {
-    flex: 1;
-    background: #f7f2ff;
-    padding: 12px;
-    margin: 0 4px;
-    text-align: center;
-    border-radius: 12px;
-    font-weight: bold;
-    color: #6d36c9;
-    border: 1.5px solid #d8c9ff;
-}
-</style>
-""", unsafe_allow_html=True)
+# ----------------------------------------------------------
+# 3. 데이터 로드 및 전처리
+# ----------------------------------------------------------
+st.header("1. 데이터 로드 및 전처리")
 
+# 데이터 파일을 업로드하는 버튼을 만드세요.
+uploaded_file = st.file_uploader("분석할 CSV 파일을 업로드하세요", type=['csv'])
 
-# -------------------------------------------
-# 페이지 상태 (초기값은 home)
-# -------------------------------------------
-if "page" not in st.session_state:
-    st.session_state["page"] = "home"
+if uploaded_file is not None:
+    # pandas를 이용하여 csv 파일을 읽어오세요.
+    df = pd.read_csv(uploaded_file)
+   
+    # 데이터 미리보기 기능
+    if st.checkbox("데이터 원본 보기"):
+        st.dataframe(df)
 
-# -------------------------------------------
-# 상단 헤더
-# -------------------------------------------
-st.markdown("""
-<div class="header-box">
-    <h1>🎉 세심제 2025 🎉</h1>
-    <h4>강원사대부고 학교축제</h4>
-    <p>12월 29일 ~ 12월 30일</p>
-</div>
-""", unsafe_allow_html=True)
+    # ----------------------------------------------------------
+    # 데이터 전처리 코드를 아래에 작성하세요.
+    # 예: 결측치 제거, 컬럼 이름 변경, 날짜 변환 등
+    # st.write("전처리 수행 중...")
+    # df = df.dropna() ...
+    # ----------------------------------------------------------
 
+   
+    # ----------------------------------------------------------
+    # 4. 데이터 분석 및 시각화
+    # ----------------------------------------------------------
+    st.header("2. 데이터 시각화 및 분석")
+    st.write("데이터를 바탕으로 의미 있는 그래프를 그려봅니다.")
 
-# -------------------------------------------
-# 탭 메뉴 (Streamlit 버튼으로 전환)
-# -------------------------------------------
-col1, col2, col3, col4 = st.columns(4)
+    # 화면을 2분할로 나누어 그래프 배치
+    chart_col1, chart_col2 = st.columns(2)
 
-with col1:
-    if st.button("🏠 홈"):
+    with chart_col1:
+        st.subheader(" 시각화 1: [제목 입력]")
+        # 첫 번째 그래프를 그리는 코드를 작성하세요.
+        # 예: x축은 날짜, y축은 매출액
+        # fig1, ax1 = plt.subplots()
+        # sns.lineplot(data=df, x='...', y='...', ax=ax1)
+        # st.pyplot(fig1)
+        st.write("이곳에 첫 번째 그래프 코드를 작성하세요.") # 코드를 짜면 이 줄은 지우세요.
+
+    with chart_col2:
+        st.subheader(" 시각화 2: [제목 입력]")
+        #  두 번째 그래프를 그리는 코드를 작성하세요.
+        # 예: 카테고리별 수량 비교 (막대 그래프)
+        # fig2, ax2 = plt.subplots()
+        # sns.barplot(data=df, x='...', y='...', ax=ax2)
+        # st.pyplot(fig2)
+        st.write("이곳에 두 번째 그래프 코드를 작성하세요.") # 코드를 짜면 이 줄은 지우세요.
+
+    # ----------------------------------------------------------
+    # 5. 결론 및 인사이트
+    # ----------------------------------------------------------
+    st.markdown("---")
+    st.header("3. 결론 및 인사이트 도출")
+   
+    # 분석 결과를 바탕으로 알게 된 점을 텍스트로 작성하세요.
+    st.text_area("분석을 통해 알게 된 점을 요약해서 적어주세요.",
+                 height=150,
+                 placeholder="예: 주말보다 평일에 매출이 20% 더 높게 나타났다. 따라서 평일 마케팅을 강화해야 한다.")
+
+else:
+    st.info("먼저 CSV 파일을 업로드해주세요.")
