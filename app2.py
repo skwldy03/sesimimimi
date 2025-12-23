@@ -11,111 +11,102 @@ st.set_page_config(
 # ----------------------------------------------------------
 # 1. 최상단: 프로젝트 소개
 # ----------------------------------------------------------
-# 필요하면 더 추가하세요.
+
 st.title("공지천 수질 측정 데이터 분석 보고서")
 st.subheader("우리가 쓰는 물은 안전할까?")
 st.markdown("---")
 
 left, middle, right = st.columns(3)
 if left.button("용존산소"):
-    left.markdown("You clicked the plain button.")
+    left.markdown("물속에 녹아 있는 산소의 양")
 if middle.button("총질소"):
-    middle.markdown("You clicked the emoji button.")
+    middle.markdown("물속에 존재하는 모든 형태의 질소 화합물(무기성 질소 + 유기성 질소)의 총량")
 if right.button("총유기탄소"):
-    right.markdown("You clicked the Material button.")
+    right.markdown("물속에 녹아 있거나 떠 있는 모든 유기물을 구성하는 탄소의 총량")
+st.markdown("---")
+    
 # ----------------------------------------------------------
 # 2. 데이터셋 소개 (텍스트, 사진, 링크, 영상)
-# 스트림릿 문서를 참고하여,, 추가 기능을 더 넣으셔도 좋습니다.
 # ----------------------------------------------------------
-col1, col2 = st.columns([1, 1])  ## 화면분할 절반씩
+
+col1, col2 = st.columns([1, 1])
 
 with col1: #왼쪽 화면
-    st.info("사용된 데이터 정보") #제목은 알아서 수정
-    # 아래 내용을 본인이 선택한 데이터에 맞게 수정하세요.
-    st.write("**데이터 파일명:** 공지천3_수질측정망.csv")  #예시.
+    st.info("사용된 데이터 정보")
+    st.write("**데이터 파일명:** 공지천3_수질측정망.csv")
     st.write("**데이터 출처:** 국가 통합물관리정보플랫폼(https://www.mulmoa.go.kr/web/gDashBoard)")
-   
-    #  데이터 관련 이미지(로고, 썸네일 등)가 있다면 경로를 수정하세요.
-    # 이미지가 없다면 주석 처리하세요.
     try:
-        st.image("공지천3_지점정보.png", caption="지점정보")
+        st.image("공지천 사진.jpg", caption="공지천의 모습")
     except:
         st.write("이미지를 불러올 수 없습니다.")
 
 with col2:
     st.warning("우리의 실천 방안")
-    # 주제와 관련된 유튜브 영상 링크를 넣으세요.
-    st.video("https://www.youtube.com/watch?v=6s7vo55ekFA") # 예시: 스트림릿 소개 영상
+    st.video("https://www.youtube.com/watch?v=6s7vo55ekFA")
 
 st.markdown("---")
 
 # ----------------------------------------------------------
 # 3. 데이터 로드 및 전처리
 # ----------------------------------------------------------
+
 st.header("1. 데이터 로드 및 전처리")
 data = pd.read_csv("공지천3_수질측정망.csv", encoding='utf-8')
 st.dataframe(data)
 
-data2 = data['용존산소(㎎/L)']
+st.subheader("용존산소와 총질소(전처리)")
+data2 = data[['용존산소','총질소']]
 st.line_chart(data2)
 
+data3 = data2.dropna()
+st.header("2. 결측치 제거 후 데이터")
+st.dataframe(data3)
 
-# 데이터 파일을 업로드하는 버튼을 만드세요.
-uploaded_file = st.file_uploader("분석할 CSV 파일을 업로드하세요", type=['csv'])
+# ----------------------------------------------------------
+# 4. 데이터 분석 및 시각화
+# ----------------------------------------------------------
 
-if uploaded_file is not None:
-    # pandas를 이용하여 csv 파일을 읽어오세요.
-    df = pd.read_csv(uploaded_file)
-   
-    # 데이터 미리보기 기능
-    if st.checkbox("데이터 원본 보기"):
-        st.dataframe(df)
+st.header("3. 데이터 분석 및 시각화")
+plt.rcParams['font.family'] = 'Malgun Gothic'
+plt.rcParams['axes.unicode_minus'] = False
 
-    # ----------------------------------------------------------
-    # 데이터 전처리 코드를 아래에 작성하세요.
-    # 예: 결측치 제거, 컬럼 이름 변경, 날짜 변환 등
-    # st.write("전처리 수행 중...")
-    # df = df.dropna() ...
-    # ----------------------------------------------------------
+chart_col1, chart_col2 = st.columns(2)
 
-   
-    # ----------------------------------------------------------
-    # 4. 데이터 분석 및 시각화
-    # ----------------------------------------------------------
-    st.header("2. 데이터 시각화 및 분석")
-    st.write("데이터를 바탕으로 의미 있는 그래프를 그려봅니다.")
+with chart_col1:
+    fig1, ax1 = plt.subplots()
+    st.subheader(" 시각화 1: 선그래프")
+    sns.lineplot(data=data3, x='용존산소', y='총질소', ax=ax1)
+    ax1.set_title('용존산소와 총질소의 관계')
+    ax1.set_xlabel('용존 산소 (mg/L)')
+    ax1.set_ylabel('총질소 (mg/L)')
+    st.pyplot(fig1)
 
-    # 화면을 2분할로 나누어 그래프 배치
-    chart_col1, chart_col2 = st.columns(2)
+with chart_col2:
+    fig2, ax2 = plt.subplots()
+    st.subheader(" 시각화 2: 막대그래프")
+    sns.barplot(data=data3, x='용존산소', y='총질소', ax=ax2)
+    ax2.set_title('용존산소와 총질소의 관계')
+    ax2.set_xlabel('용존 산소 (mg/L)')
+    ax2.set_ylabel('총질소 (mg/L)')
+    st.pyplot(fig2)
 
-    with chart_col1:
-        st.subheader(" 시각화 1: [제목 입력]")
-        # 첫 번째 그래프를 그리는 코드를 작성하세요.
-        # 예: x축은 날짜, y축은 매출액
-        # fig1, ax1 = plt.subplots()
-        # sns.lineplot(data=df, x='...', y='...', ax=ax1)
-        # st.pyplot(fig1)
-        st.write("이곳에 첫 번째 그래프 코드를 작성하세요.") # 코드를 짜면 이 줄은 지우세요.
+# ----------------------------------------------------------
+# 5. 결론 및 인사이트
+# ----------------------------------------------------------
 
-    with chart_col2:
-        st.subheader(" 시각화 2: [제목 입력]")
-        #  두 번째 그래프를 그리는 코드를 작성하세요.
-        # 예: 카테고리별 수량 비교 (막대 그래프)
-        # fig2, ax2 = plt.subplots()
-        # sns.barplot(data=df, x='...', y='...', ax=ax2)
-        # st.pyplot(fig2)
-        st.write("이곳에 두 번째 그래프 코드를 작성하세요.") # 코드를 짜면 이 줄은 지우세요.
+st.markdown("---")
+st.header("4. 분석 결과 및 인사이트")
 
-    # ----------------------------------------------------------
-    # 5. 결론 및 인사이트
-    # ----------------------------------------------------------
-    st.markdown("---")
-    st.header("3. 결론 및 인사이트 도출")
-   
-    # 분석 결과를 바탕으로 알게 된 점을 텍스트로 작성하세요.
-    st.text_area("분석을 통해 알게 된 점을 요약해서 적어주세요.",
-                 height=150,
-                 placeholder="예: 주말보다 평일에 매출이 20% 더 높게 나타났다. 따라서 평일 마케팅을 강화해야 한다.")
+summary_col1, summary_col2 = st.columns(2)
 
-else:
-    st.info("먼저 CSV 파일을 업로드해주세요.")
+with summary_col1:
+    st.info("데이터 분석 요약")
+    st.write("1. 용존산소(DO)와 총질소(TN)는 대체로 **반비례/정비례** 관계를 보임.")
+    st.write("2. 특정 시기(또는 지점)에서 수질 수치가 급격히 변하는 구간 발견.")
+
+with summary_col2:
+    st.warning("환경적 제언")
+    st.write("- 총질소 농도가 높은 구간은 인근 농경지나 생활 하수의 유입이 의심됨.")
+    st.write("- 지속적인 모니터링을 통해 공지천의 자정 작용을 도와야 함.")
+
+st.success("이번 프로젝트를 통해 데이터가 단순한 숫자가 아니라 우리 동네의 환경 상태를 알려주는 중요한 지표임을 깨달았습니다.")
