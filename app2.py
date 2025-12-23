@@ -54,8 +54,8 @@ st.header("1. 데이터 로드 및 전처리")
 data = pd.read_csv("공지천3_수질측정망.csv", encoding='utf-8')
 st.dataframe(data)
 
-st.subheader("용존산소와 총질소(전처리)")
-data2 = data[['용존산소','총질소']]
+st.subheader("용존산소와 생물화학적산소요구량(전처리)")
+data2 = data[['용존산소','생물화학적산소요구량']]
 st.line_chart(data2)
 
 data3 = data2.dropna()
@@ -75,20 +75,20 @@ chart_col1, chart_col2 = st.columns(2)
 with chart_col1:
     fig1, ax1 = plt.subplots()
     st.subheader(" 시각화 1: 선그래프")
-    sns.lineplot(data=data3, x='용존산소', y='총질소', ax=ax1)
-    ax1.set_title('용존산소와 총질소의 관계')
+    sns.lineplot(data=data3, x='용존산소', y='생물화학적산소요구량', ax=ax1)
+    ax1.set_title('용존산소와 생물화학적산소요구량의 관계')
     ax1.set_xlabel('용존 산소 (mg/L)')
-    ax1.set_ylabel('총질소 (mg/L)')
+    ax1.set_ylabel('생물화학적산소요구량')
     st.pyplot(fig1)
 
 with chart_col2:
     fig2, ax2 = plt.subplots()
     st.subheader(" 시각화 2: 막대그래프")
-    sns.barplot(data=data3, x='용존산소', y='총질소', ax=ax2)
-    ax2.set_title('용존산소와 총질소의 관계')
+    sns.barplot(data=data3, x='용존산소', y='생물화학적산소요구량', ax=ax2)
+    ax2.set_title('용존산소와 생물화학적산소요구량의 관계')
     ax2.set_xlabel('용존 산소 (mg/L)')
-    ax2.set_ylabel('총질소 (mg/L)')
-    ax2.set_xticks(ax2.get_xticks()[::1])  # x축 눈금 간격 조정
+    ax2.set_ylabel('생물화학적산소요구량')
+    plt.xticks(rotation=45)
     st.pyplot(fig2)
 
 # ----------------------------------------------------------
