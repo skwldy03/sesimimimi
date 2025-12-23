@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 st.set_page_config(
-    page_title="나만의 데이터 분석 보고서",
+    page_title="공지천 수질 데이터 분석",
     layout="wide"
 )
 
@@ -88,6 +88,7 @@ with chart_col2:
     ax2.set_title('용존산소와 총질소의 관계')
     ax2.set_xlabel('용존 산소 (mg/L)')
     ax2.set_ylabel('총질소 (mg/L)')
+    ax2.set_xticks(ax2.get_xticks()[::1])  # x축 눈금 간격 조정
     st.pyplot(fig2)
 
 # ----------------------------------------------------------
